@@ -12,8 +12,8 @@ async function bootstrap() {
 
   // Swagger Config
   const config = new DocumentBuilder()
-    .setTitle('Mini CRM API')
-    .setDescription('The Mini CRM API description')
+    .setTitle('Secureit CRM API')
+    .setDescription('The Secureit CRM API description')
     .setVersion('1.0')
     .addBearerAuth() // Adds the "Authorize" button to Swagger
     .build();

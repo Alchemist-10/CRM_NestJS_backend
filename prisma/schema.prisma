@@ -17,12 +17,19 @@ enum Role {
   EMPLOYEE
 }
 
+enum TaskStatus {
+  PENDING
+  IN_PROGRESS
+  DONE
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
   name      String
   password  String
   role      Role     @default(EMPLOYEE)
+  tasks     Task[]   @relation("TasksAssigned")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -33,6 +40,25 @@ model Customer {
   email     String   @unique
   phone     String   @unique
   company   String?
+  tasks     Task[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Task {
+  id           Int        @id @default(autoincrement())
+  title        String
+  description  String?
+  status       TaskStatus @default(PENDING)
+  assignedToId Int
+  customerId   Int
+
+  assignedTo User     @relation("TasksAssigned", fields: [assignedToId], references: [id])
+  customer   Customer @relation(fields: [customerId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([assignedToId])
+  @@index([customerId])
 }

@@ -1,7 +1,7 @@
 {
-  "name": "podcast-api",
+  "name": "secureit-crm-api",
   "version": "0.0.1",
-  "description": "",
+  "description": "Secureit CRM API (NestJS + Prisma + PostgreSQL)",
   "author": "",
   "private": true,
   "type": "commonjs",
