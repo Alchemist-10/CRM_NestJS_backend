@@ -1,98 +1,113 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Secureit CRM API (NestJS + Prisma)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A small CRM-style REST API built with **NestJS**, **Prisma**, and **PostgreSQL**. It includes JWT authentication, role-based access control (ADMIN/EMPLOYEE), and basic resources for **Users**, **Customers**, and **Tasks**.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Tech stack
 
-## Description
+- NestJS (TypeScript)
+- Prisma (with `@prisma/adapter-pg`)
+- PostgreSQL
+- JWT auth (`passport-jwt`)
+- Swagger/OpenAPI at `/api`
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Project structure
 
-## Project setup
+- `podcast-api/` — the NestJS application
+- `podcast-api/prisma/` — Prisma schema + migrations
+- `podcast-api/generated/prisma/` — generated Prisma client output
 
-```bash
-$ npm install
-```
+## Prerequisites
 
-## Compile and run the project
+- Node.js (LTS recommended)
+- PostgreSQL database
 
-```bash
-# development
-$ npm run start
+## Environment variables
 
-# watch mode
-$ npm run start:dev
+Create an `.env` file in either:
 
-# production mode
-$ npm run start:prod
-```
+- `podcast-api/.env` (preferred), or
+- repo root `.env`
 
-## Run tests
+Required:
+
+- `DATABASE_URL` — Postgres connection string (e.g. `postgresql://user:pass@localhost:5432/mini_crm?schema=public`)
+  - The API also accepts `db_url` as an alternative.
+- `JWT_SECRET` — secret used to sign/verify JWTs (use a strong value in production)
+
+## Setup
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+cd podcast-api
+npm install
 ```
 
-## Deployment
+## Database (Prisma)
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+Run migrations (creates/updates tables):
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+cd podcast-api
+npx prisma migrate dev
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Generate Prisma client (usually not needed manually if your workflow already does it):
 
-## Resources
+```bash
+cd podcast-api
+npx prisma generate
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+## Run the API
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Development (watch mode):
 
-## Support
+```bash
+cd podcast-api
+npm run start:dev
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+The server listens on:
 
-## Stay in touch
+- `http://localhost:3000`
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Swagger UI:
 
-## License
+- `http://localhost:3000/api`
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+## Auth & roles
+
+- JWT Bearer auth is required for protected routes.
+- Roles:
+  - `ADMIN`
+  - `EMPLOYEE`
+
+Typical flow:
+
+1. Register a user
+2. Login to get `accessToken`
+3. Use Swagger “Authorize” with `Bearer <token>`
+
+## Main routes (high level)
+
+- `POST /auth/register`
+- `POST /auth/login`
+- `GET /users` (ADMIN only)
+- `PATCH /users/:id` (ADMIN only; update role)
+- `GET /customers` (protected)
+- `POST /customers` (ADMIN only)
+- `GET /tasks` (ADMIN/EMPLOYEE; employees get their assigned tasks)
+- `POST /tasks` (ADMIN only)
+- `PATCH /tasks/:id/status` (ADMIN/EMPLOYEE; employees can update their own tasks)
+
+## Tests
+
+```bash
+cd podcast-api
+npm test
+npm run test:e2e
+```
+
+## Notes
+
+- Local env loading: the Prisma service attempts to load both `podcast-api/.env` and the repo-root `.env` for convenience.
+- Default JWT secret fallback exists for local dev, but you should set `JWT_SECRET` explicitly.
