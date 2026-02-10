@@ -31,7 +31,6 @@ Create an `.env` file in either:
 Required:
 
 - `DATABASE_URL` — Postgres connection string (e.g. `postgresql://user:pass@localhost:5432/mini_crm?schema=public`)
-  - The API also accepts `db_url` as an alternative.
 - `JWT_SECRET` — secret used to sign/verify JWTs (use a strong value in production)
 
 ## Setup
