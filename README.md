@@ -12,9 +12,9 @@ A small CRM-style REST API built with **NestJS**, **Prisma**, and **PostgreSQL**
 
 ## Project structure
 
-- `podcast-api/` — the NestJS application
-- `podcast-api/prisma/` — Prisma schema + migrations
-- `podcast-api/generated/prisma/` — generated Prisma client output
+- `Secure-task-api/` — the NestJS application
+- `Secure-task-api/prisma/` — Prisma schema + migrations
+- `Secure-task-api/generated/prisma/` — generated Prisma client output
 
 ## Prerequisites
 
@@ -25,7 +25,7 @@ A small CRM-style REST API built with **NestJS**, **Prisma**, and **PostgreSQL**
 
 Create an `.env` file in either:
 
-- `podcast-api/.env` (preferred), or
+- `Secure-task-api/.env` (preferred), or
 - repo root `.env`
 
 Required:
@@ -36,7 +36,7 @@ Required:
 ## Setup
 
 ```bash
-cd podcast-api
+cd Secure-task-api
 npm install
 ```
 
@@ -45,14 +45,14 @@ npm install
 Run migrations (creates/updates tables):
 
 ```bash
-cd podcast-api
+cd Secure-task-api
 npx prisma migrate dev
 ```
 
 Generate Prisma client (usually not needed manually if your workflow already does it):
 
 ```bash
-cd podcast-api
+cd Secure-task-api
 npx prisma generate
 ```
 
@@ -61,7 +61,7 @@ npx prisma generate
 Development (watch mode):
 
 ```bash
-cd podcast-api
+cd Secure-task-api
 npm run start:dev
 ```
 
@@ -101,12 +101,12 @@ Typical flow:
 ## Tests
 
 ```bash
-cd podcast-api
+cd Secure-task-api
 npm test
 npm run test:e2e
 ```
 
 ## Notes
 
-- Local env loading: the Prisma service attempts to load both `podcast-api/.env` and the repo-root `.env` for convenience.
+- Local env loading: the Prisma service attempts to load both `Secure-task-api/.env` and the repo-root `.env` for convenience.
 - Default JWT secret fallback exists for local dev, but you should set `JWT_SECRET` explicitly.
